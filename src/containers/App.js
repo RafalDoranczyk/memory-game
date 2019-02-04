@@ -17,7 +17,7 @@ class App extends Component {
     isGameRunning: false,
     clickedBoards: [],
     wait: false,
-    time: 121,
+    time: 0,
     boardsDone: [],
   }
 
