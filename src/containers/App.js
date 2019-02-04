@@ -23,8 +23,7 @@ class App extends Component {
 
   // works ok
   componentDidMount() {
-    const { isGameReady, allColors } = this.state
-
+    const { allColors } = this.state
     axios.get(COLORS_API)
       .then(res => {
         const dataColors = res.data;
@@ -38,6 +37,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log(this.state.allColors)
     const {
       clickedBoards,
       renderedBoards,
@@ -46,8 +46,8 @@ class App extends Component {
 
     if (boardsDone.length === 18 && prevState.isGameRunning === true) {
       clearInterval(this.timeID)
-      this.setState({ isGameRunning: false })
-
+      this.setState({ isGameReady: false, isGameRunning: false, renderedBoards: [], boardsDone: [], })
+      this.componentDidMount()
     }
 
     if (isGameRunning) {
@@ -66,7 +66,7 @@ class App extends Component {
 
 
         }
-        this.setState({ clickedBoards: [], boardsDone })
+        this.setState({ clickedBoards: [], boardsDone, })
       }
     }
 
@@ -76,8 +76,6 @@ class App extends Component {
   giveRandomColorsHandler = () => {
     const { renderedBoards } = this.state
     let { allColors } = this.state
-
-
     allColors = allColors.splice(1, 9)
     for (let i = 0; i < 9; i++) {
       allColors.push(allColors[i])
@@ -91,14 +89,13 @@ class App extends Component {
       }
       allColors.splice(random, 1)
     }
-
     this.setState({ renderedBoards })
-
   }
 
   // works ok
   showBoardsForASecondHandler = () => {
-    const renderedBoards = this.state.renderedBoards;
+    const renderedBoards = this.state.renderedBoards
+    console.log(renderedBoards)
     setTimeout(() => {
       renderedBoards.forEach(board => board.isDone = false)
       this.setState({ renderedBoards })
@@ -106,12 +103,12 @@ class App extends Component {
   }
 
   countTimeHandler = () => {
-    let time = this.state.time;
+    let time = 0;
+    console.log(time)
     this.timeID = setInterval(() => {
       time++;
       this.setState({ time })
     }, 1000);
-
   }
 
   clickOnBoardHandler = (e, id) => {
@@ -136,8 +133,8 @@ class App extends Component {
 
 
   render() {
-
-
+    // console.log(this.state.renderedBoards)
+    // console.log(this.timeID)
     const { renderedBoards, time, isGameRunning, isGameReady } = this.state
     return (
       <Layout>
@@ -156,6 +153,7 @@ class App extends Component {
         <EndGameWindow
           isGameRunning={isGameRunning}
           time={time}
+          startGame={this.startGameHandler}
         />
       </Layout>
 

@@ -133,6 +133,7 @@ class EndGameWindow extends Component {
                 />
 
                 <StartAnotherGameButton
+                    onClick={this.props.startGame}
                     fetchedResults={fetchedResults}
                 >    Start another game!
                 
