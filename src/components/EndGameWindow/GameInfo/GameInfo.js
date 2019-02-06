@@ -8,7 +8,7 @@ position: absolute;
 top: 0;
 left: 2%;
 right: 2%;
-bottom: 50vh;
+bottom: 80vh;
 display: flex;
 flex-flow: column nowrap;
 align-items: center;
@@ -16,7 +16,7 @@ text-align: center;
 `
 const TitleStyle = styled.h1`
 position: absolute;
-top: 50%;
+top: 40%;
 left: ${props => {
         if (props.isSended) return '200%'
         return '50%'

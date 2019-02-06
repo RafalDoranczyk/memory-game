@@ -7,7 +7,6 @@ const BoardWrapper = styled.div`
 height: 100vh;
 display: flex;
 flex-flow: row wrap;
-background-color: #333;
 `
 
 

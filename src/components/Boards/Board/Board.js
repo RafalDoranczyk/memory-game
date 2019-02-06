@@ -6,8 +6,7 @@ const Board = styled.div`
     flex-basis: 15%;
     flex-grow: 1;
     height: 33.33vh;
-    background-color: gray;
-    border: 1px solid white;
+    box-shadow: 0 0 1px 1px #D3D3D3;
 
 @media(orientation: portrait){
         height: 16.66vh;
@@ -20,9 +19,8 @@ const Board = styled.div`
 const board = props => {
     const { isDone, boardColor, clickBoard } = props
 
-    const isBoardDone = isDone ? boardColor : '#555'
+    const isBoardDone = isDone ? boardColor : '#484848'
     const renderedBoardCokor = { backgroundColor: isBoardDone }
-
 
     return (
         <Board

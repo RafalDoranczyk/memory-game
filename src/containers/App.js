@@ -11,44 +11,78 @@ const COLORS_API = 'https://colors-a5386.firebaseio.com/.json'
 class App extends Component {
 
   state = {
-    allColors: [],
-    renderedBoards: [],
+    allColors: [], // getting all colors here from API
+    renderedBoards: [], // colors for rendered boards (18)
     isGameReady: false,
     isGameRunning: false,
     clickedBoards: [],
     wait: false,
-    time: 0,
+    time: 4,
     boardsDone: [],
+    isStartGameWindowActive: true, //this window is showed only once
   }
 
-  // works ok
+  // Getting all colors from API. CHANGING STATE: ISGAMEREADY : TRUE!
   componentDidMount() {
-    const { allColors } = this.state
+    let { allColors, } = this.state
     axios.get(COLORS_API)
       .then(res => {
-        const dataColors = res.data;
-        for (let i = 0; i < 18; i++) {
-          const random = Math.floor(Math.random() * dataColors.length);
-          allColors[i] = res.data[random]
-          dataColors.splice(random, 1)
-        }
-        this.setState({ allColors, isGameReady: true })
+        allColors = res.data
+        this.setState({ allColors, isGameReady: true, })
+        this.createRenderedBoardsHandler()
       })
   }
 
+  createRenderedBoardsHandler = () => {
+    console.log('jestem');
+    // Same allColors array, but with random position of each color
+    const temporaryArray = [...this.state.allColors]
+    const allColors = [];
+    for (let i = 0; i < this.state.allColors.length; i++) {
+      const random = Math.floor(Math.random() * temporaryArray.length)
+      allColors.push(temporaryArray[random])
+      temporaryArray.splice(random, 1)
+    }
+    //creating renderBoards color
+    const { renderedBoards } = this.state
+    const colorsToConcat = allColors.splice(0, 9)
+    // create duplicate, we need 18 position in an array (9x2)
+    const colorsToRender = colorsToConcat.concat(colorsToConcat)
+    for (let i = 0; i < 18; i++) {
+      const random = Math.floor(Math.random() * colorsToRender.length)
+      renderedBoards[i] = {
+        id: i,
+        color: colorsToRender[random],
+        isDone: true,
+      }
+      colorsToRender.splice(random, 1)
+    }
+    this.setState({ renderedBoards, isGameReady: true })
+  }
+
+
+
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state.allColors)
+    // console.log(this.state.allColors)
     const {
       clickedBoards,
       renderedBoards,
       boardsDone,
+      isGameReady,
       isGameRunning } = this.state
+    console.log(isGameReady)
 
     if (boardsDone.length === 18 && prevState.isGameRunning === true) {
       clearInterval(this.timeID)
-      this.setState({ isGameReady: false, isGameRunning: false, renderedBoards: [], boardsDone: [], })
-      this.componentDidMount()
+      this.setState({ isGameReady: false, isGameRunning: false, boardsDone: [], })
+      if (!prevState.isGameReady) {
+        setTimeout(() => {
+          this.createRenderedBoardsHandler()
+        }, 2000)
+      }
     }
+
+
 
     if (isGameRunning) {
       if (this.state.clickedBoards.length === 2) {
@@ -59,12 +93,9 @@ class App extends Component {
             renderedBoards[clickedBoards[1].id].isDone = false
             this.setState({ renderedBoards, wait: false })
           }, 350)
-
         } else {
           boardsDone.push(clickedBoards[0].id)
           boardsDone.push(clickedBoards[1].id)
-
-
         }
         this.setState({ clickedBoards: [], boardsDone, })
       }
@@ -72,30 +103,16 @@ class App extends Component {
 
   }
 
-  // works ok
-  giveRandomColorsHandler = () => {
-    const { renderedBoards } = this.state
-    let { allColors } = this.state
-    allColors = allColors.splice(1, 9)
-    for (let i = 0; i < 9; i++) {
-      allColors.push(allColors[i])
-    }
-    for (let i = 0; i < 18; i++) {
-      const random = Math.floor(Math.random() * allColors.length);
-      renderedBoards[i] = {
-        id: i,
-        color: allColors[random],
-        isDone: true,
-      }
-      allColors.splice(random, 1)
-    }
-    this.setState({ renderedBoards })
-  }
 
+  // STARTIN THE GAME, FUNCTION BELOW ARE TRIGGERED HERE
+  startGameHandler = () => {
+    this.showBoardsForASecondHandler();
+    this.countTimeHandler();
+    this.setState({ isGameRunning: true, isStartGameWindowActive: false, isGameReady: false })
+  }
   // works ok
   showBoardsForASecondHandler = () => {
     const renderedBoards = this.state.renderedBoards
-    console.log(renderedBoards)
     setTimeout(() => {
       renderedBoards.forEach(board => board.isDone = false)
       this.setState({ renderedBoards })
@@ -104,13 +121,13 @@ class App extends Component {
 
   countTimeHandler = () => {
     let time = 0;
-    console.log(time)
     this.timeID = setInterval(() => {
       time++;
       this.setState({ time })
     }, 1000);
   }
 
+  // CLICK ON BOARD FUNCTION
   clickOnBoardHandler = (e, id) => {
     const { renderedBoards, clickedBoards } = this.state
     const index = renderedBoards.findIndex(board => (
@@ -123,19 +140,12 @@ class App extends Component {
     this.setState({ renderedBoards, clickedBoards })
   }
 
-  // works ok
-  startGameHandler = () => {
-    this.giveRandomColorsHandler();
-    this.showBoardsForASecondHandler();
-    this.countTimeHandler();
-    this.setState({ isGameRunning: true })
-  }
 
 
   render() {
-    // console.log(this.state.renderedBoards)
-    // console.log(this.timeID)
-    const { renderedBoards, time, isGameRunning, isGameReady } = this.state
+
+
+    const { renderedBoards, time, isGameRunning, isGameReady, isStartGameWindowActive } = this.state
     return (
       <Layout>
 
@@ -144,6 +154,7 @@ class App extends Component {
           startGame={this.startGameHandler}
           time={time}
           isGameReady={isGameReady}
+          isStartGameWindowActive={isStartGameWindowActive}
         />
         <Boards
           clickBoard={this.clickOnBoardHandler}
@@ -151,6 +162,7 @@ class App extends Component {
           giveColors={this.giveRandomColorsHandler} />
 
         <EndGameWindow
+          isGameReady={isGameReady}
           isGameRunning={isGameRunning}
           time={time}
           startGame={this.startGameHandler}

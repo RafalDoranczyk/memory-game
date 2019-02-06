@@ -10,6 +10,7 @@ justify-content: space-around;
 text-align: justify;
 font-size: 16px;
 letter-spacing: 1px;
+
 h1{
     font-size: 22px;
     text-align: center;

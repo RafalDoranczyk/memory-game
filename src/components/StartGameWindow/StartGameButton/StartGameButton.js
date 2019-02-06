@@ -1,34 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 export const Button = styled.button`
-padding: 5px 10px;
-background-color: transparent;
-border: 1px solid #fff;
-border-radius: 50px;
-font-size: 20px;
-color: gold;
-cursor: pointer;
-font-weight: 900;
+position: absolute;
+top: 85vh;
+left: 50%;
+transform: translateX(-50%);
+padding: 15px 25px;
+
 opacity: ${props => {
         if (props.isGameReady) return '1'
-        return '.4'
+        return '.1'
     }};
 transition: opacity .4s;
+border-radius: 100px;
+background-color: #059BE5;
+font-size: 20px;
+color: #fff;
+font-weight: 900;
+border: none;
+cursor: pointer;
 `
-
 const startGameButton = props => {
-    const { time, startGame, isGameReady } = props
-
-    const message = time === 0 ? 'StartGame' : 'Start another game!'
+    const { startGame, isGameReady } = props
 
     return (
         <Button
             disabled={isGameReady ? false : true}
             isGameReady={isGameReady}
             onClick={startGame}>
-            {message}
+            Start Game!
         </Button>
     )
 }

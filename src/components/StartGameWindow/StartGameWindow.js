@@ -4,9 +4,9 @@ import StartGameButton from './StartGameButton/StartGameButton';
 import GameInfo from './GameInfo/GameInfo';
 
 
-const StartGameWindow = styled.div`
-top: ${({ isGameRunning }) => isGameRunning ? '-100%' : '0'};
+const StartGameWindowWrapper = styled.div`
 position: absolute;
+top: 0;
 left: 0;
 height: 100%;
 width: 100%;
@@ -14,25 +14,29 @@ display: flex;
 flex-flow: column nowrap;
 justify-content: space-around;
 align-items: center;
-background-color: #262f3d;
-color: #fff;
-transition: .4s;
+transform:${({ isStartGameWindowActive }) => {
+        if (!isStartGameWindowActive) {
+            return 'translateX(-100%)'
+        }
+    }};
+    transition:  transform .4s;
+background-color: #222;
+color: #FFA611;
 `
 
-
 const startGameWindow = props => {
-    const { isGameRunning, startGame, time, isGameReady } = props
+    const { startGame, time, isGameReady, isStartGameWindowActive } = props
 
     return (
 
-        < StartGameWindow
-            isGameRunning={isGameRunning}>
+        < StartGameWindowWrapper
+            isStartGameWindowActive={isStartGameWindowActive}>
             <GameInfo />
             <StartGameButton
                 isGameReady={isGameReady}
                 startGame={startGame}
                 time={time} />
-        </StartGameWindow >
+        </StartGameWindowWrapper >
 
     )
 }

@@ -4,37 +4,27 @@ import GameInfo from './GameInfo/GameInfo';
 import SendResult from './SendResult/SendResult';
 import axios from 'axios';
 import { Button } from '../StartGameWindow/StartGameButton/StartGameButton'
+
 const EndGameWindowWrapper = styled.div`
-top: ${({ isGameRunning, time }) => {
-        if (!isGameRunning && time > 0) {
-            return '0'
-        }
-        else return '-100%'
-    }};
 position: absolute;
+top: 0;
 left: 0;
 height: 100%;
 width: 100%; 
+transform:  ${({ isGameRunning, time }) => {
+        if (!isGameRunning && time > 0) {
+            return 'translateY(0)'
+        }
+        return 'translateY(-100%)'
+    }};
 background-color: #222;
 color: #fff;
-transition: .4s;
+transition: transform .5s;
 font-size: 12px;
 
 `
-const StartAnotherGameButton = styled(Button)`
-position: absolute;
-top: 85vh;
-height: 10vh;
-left: 50%;
-width: 60%;
-font-size: 14px;
-transform: translateX(-50%);
-border: ${props => {
-        if (props.fetchedResults.length > 0) return '1px solid gold'
-    }};
-color: ${props => {
-        if (props.fetchedResults.length > 0) return 'gold'
-    }};
+const PlayAgainGameButton = styled(Button)`
+
 `
 
 
@@ -68,16 +58,16 @@ class EndGameWindow extends Component {
                         .then(res => {
                             let data = Object.values(res.data);
                             const times = [];
-                           data.map(result=>(
-                               times.push(result.time)
-                           ))
-                           ;
-                           const playerPosition = 1 + times.sort((a,b)=>{
-                               return a-b
-                           }).findIndex(time=>(
-                             time===this.props.time
-                           ))
-                           
+                            data.map(result => (
+                                times.push(result.time)
+                            ))
+                                ;
+                            const playerPosition = 1 + times.sort((a, b) => {
+                                return a - b
+                            }).findIndex(time => (
+                                time === this.props.time
+                            ))
+
                             function compare(a, b) {
                                 const timeA = a.time
                                 const timeB = b.time
@@ -91,8 +81,8 @@ class EndGameWindow extends Component {
                             }
                             data.sort(compare)
                             data = data.splice(0, 10);
-                           
-                            this.setState({ fetchedResults: data,playerPosition  })
+
+                            this.setState({ fetchedResults: data, playerPosition })
                         })
                 }
                 )
@@ -107,7 +97,7 @@ class EndGameWindow extends Component {
 
     render() {
 
-        const { name, isSended, fetchedResults,playerPosition } = this.state
+        const { name, isSended, fetchedResults, playerPosition } = this.state
         const { time, isGameRunning } = this.props
 
         return (
@@ -115,13 +105,11 @@ class EndGameWindow extends Component {
                 isGameRunning={isGameRunning}
                 time={time}>
 
-
                 <GameInfo
                     fetchedResults={fetchedResults}
                     time={time}
                     isSended={isSended}
                 />
-
 
                 <SendResult
                     fetchedResults={fetchedResults}
@@ -132,12 +120,12 @@ class EndGameWindow extends Component {
                     playerPosition={playerPosition}
                 />
 
-                <StartAnotherGameButton
+                <PlayAgainGameButton
+                    isGameReady={this.props.isGameReady}
                     onClick={this.props.startGame}
                     fetchedResults={fetchedResults}
-                >    Start another game!
-                
-                </StartAnotherGameButton>
+                >Play Again!
+                </PlayAgainGameButton>
 
             </EndGameWindowWrapper>
         );
