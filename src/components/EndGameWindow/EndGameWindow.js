@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import GameInfo from './GameInfo/GameInfo';
-import SendResult from './SendResult/SendResult';
 import axios from 'axios';
-import { Button } from '../StartGameWindow/StartGameButton/StartGameButton'
+import StartGameButton from '../UI/Buttons/StartGameButton/StartGameButton'
+import PlayerGameInfo from './PlayerGameInfo/PlayerGameInfo';
+import SendResultForm from './SendResultForm/SendResultForm';
+import BestResultsBoard from './BestResultsBoard/BestResultsBoard';
+import PlayerPosition from './PlayerPosition/PlayerPosition';
+import Spinner from '../UI/Spinner/Spinner';
 
 const EndGameWindowWrapper = styled.div`
 position: absolute;
@@ -11,22 +14,42 @@ top: 0;
 left: 0;
 height: 100%;
 width: 100%; 
+padding: 10px;
+display:flex;
+flex-flow: column nowrap;
+justify-content: space-around;
+align-items: center;
 transform:  ${({ isGameRunning, time }) => {
         if (!isGameRunning && time > 0) {
             return 'translateY(0)'
         }
         return 'translateY(-100%)'
     }};
-background-color: #222;
-color: #fff;
 transition: transform .5s;
-font-size: 12px;
-
-`
-const PlayAgainGameButton = styled(Button)`
-
+font-size: 14px;
+background-color: #333;
+color: #ddd;
 `
 
+const FormAndResultsBoardWrapper = styled.div`
+transform: ${props => {
+        if (props.isSended) return 'translateY(-20%)'
+        return
+    }};
+flex-basis: ${props => {
+        if (props.isSended) return '55%'
+        return '40%'
+    }};
+width: 90%;
+transition: .5s .2s;
+background-color: #222;
+box-shadow: 0 0 25px 0 #F6820D;
+border-radius: 20px;
+text-align: center;
+position: relative;
+top:0;
+left:0;
+`
 
 const API = 'https://colors-results.firebaseio.com/.json'
 class EndGameWindow extends Component {
@@ -46,12 +69,13 @@ class EndGameWindow extends Component {
 
 
     postAndGetResultsHandler = e => {
+        e.preventDefault()
         const { name } = this.state
         const time = this.props.time
         const result = { name, time }
-        e.preventDefault()
         if (name) {
             this.setState({ isSended: true })
+
             axios.post(API, result)
                 .then(res => {
                     axios.get(API)
@@ -93,6 +117,14 @@ class EndGameWindow extends Component {
 
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.fetchedResults.length > 0 && this.props.isGameRunning) {
+            setTimeout(() => {
+                this.setState({ fetchedResults: [], isSended: false, playerPosition: '', name: '' })
+            }, 1000);
+
+        }
+    }
 
 
     render() {
@@ -100,32 +132,48 @@ class EndGameWindow extends Component {
         const { name, isSended, fetchedResults, playerPosition } = this.state
         const { time, isGameRunning } = this.props
 
+
+
         return (
             <EndGameWindowWrapper
                 isGameRunning={isGameRunning}
-                time={time}>
+                time={time} >
 
-                <GameInfo
-                    fetchedResults={fetchedResults}
-                    time={time}
+                <PlayerGameInfo
                     isSended={isSended}
-                />
+                    time={time} />
 
-                <SendResult
-                    fetchedResults={fetchedResults}
-                    isSended={isSended}
-                    changeName={this.changeNameHandler}
-                    name={name}
-                    postAndGetResults={this.postAndGetResultsHandler}
+
+                <FormAndResultsBoardWrapper
+                    isSended={isSended}>
+
+                    {fetchedResults.length > 0 && <BestResultsBoard
+                        fetchedResults={fetchedResults}
+                        isSended={isSended}
+                    />}
+
+                    <SendResultForm
+                        isSended={isSended}
+                        fetchedResults={fetchedResults}
+                        postAndGetResults={this.postAndGetResultsHandler}
+                        name={name}
+                        changeName={this.changeNameHandler} />
+
+                    {fetchedResults.length === 0 && isSended && <Spinner />}
+
+                </FormAndResultsBoardWrapper>
+
+
+                <PlayerPosition
                     playerPosition={playerPosition}
                 />
 
-                <PlayAgainGameButton
+                <StartGameButton
                     isGameReady={this.props.isGameReady}
-                    onClick={this.props.startGame}
-                    fetchedResults={fetchedResults}
-                >Play Again!
-                </PlayAgainGameButton>
+                    startGame={this.props.startGame}
+                    fetchedResults={fetchedResults}>
+                    Play Again!</StartGameButton>
+
 
             </EndGameWindowWrapper>
         );

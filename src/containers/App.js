@@ -17,9 +17,10 @@ class App extends Component {
     isGameRunning: false,
     clickedBoards: [],
     wait: false,
-    time: 4,
+    time: 0,
     boardsDone: [],
     isStartGameWindowActive: true, //this window is showed only once
+
   }
 
   // Getting all colors from API. CHANGING STATE: ISGAMEREADY : TRUE!
@@ -34,7 +35,7 @@ class App extends Component {
   }
 
   createRenderedBoardsHandler = () => {
-    console.log('jestem');
+
     // Same allColors array, but with random position of each color
     const temporaryArray = [...this.state.allColors]
     const allColors = [];
@@ -70,7 +71,7 @@ class App extends Component {
       boardsDone,
       isGameReady,
       isGameRunning } = this.state
-    console.log(isGameReady)
+
 
     if (boardsDone.length === 18 && prevState.isGameRunning === true) {
       clearInterval(this.timeID)
@@ -106,6 +107,7 @@ class App extends Component {
 
   // STARTIN THE GAME, FUNCTION BELOW ARE TRIGGERED HERE
   startGameHandler = () => {
+    console.log('djest');
     this.showBoardsForASecondHandler();
     this.countTimeHandler();
     this.setState({ isGameRunning: true, isStartGameWindowActive: false, isGameReady: false })

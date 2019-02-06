@@ -3,26 +3,20 @@ import styled from 'styled-components'
 import OneResult from './OneResult/OneResult';
 
 const BestResultsBoardWrapper = styled.div`
-position: absolute;
-top: 5%;
-left: ${props => {
-        if (props.fetchedResults.length > 0) return '0'
-        return '-110%'
-    }};
-transition: .4s;
 height: 100%;
-width: 100%;
-/* background-color: red; */
-font-size: 15px;
+display: flex;
+flex-flow: column nowrap;
+justify-content: space-around;
+text-align: center;
 `
+
 const Table = styled.table`
-height: 80%;
 width: 90%;
-margin: 10px auto 0 auto;
-background-color: #FFDC00;
+margin: 0 auto;
+background-color: #F6820D;
 color: #111;
 tr{
-    background-color: #FF4136;
+    background-color: #FFCB2B;
 }
 td{
     color: #000;
@@ -44,10 +38,11 @@ const BestResultsBoard = props => {
 
     return (
         <BestResultsBoardWrapper
-            fetchedResults={fetchedResults}
+
         >
-            <h3>Top 10 Best results</h3>
-            <Table>
+            <h3>Top 10 best results</h3>
+            <Table
+            >
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -61,6 +56,7 @@ const BestResultsBoard = props => {
             </Table>
 
         </BestResultsBoardWrapper>
+
     );
 };
 

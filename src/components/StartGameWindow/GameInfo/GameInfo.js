@@ -3,12 +3,11 @@ import styled from 'styled-components'
 
 const GameInfoWrapper = styled.div`
 width: 80%;
-flex-basis: 70%;
+flex-basis: 60%;
 display: flex;
 flex-flow: column nowrap;
-justify-content: space-around;
+justify-content: space-evenly;
 text-align: justify;
-font-size: 16px;
 letter-spacing: 1px;
 
 h1{

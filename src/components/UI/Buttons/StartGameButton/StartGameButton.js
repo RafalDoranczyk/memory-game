@@ -1,13 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export const Button = styled.button`
-position: absolute;
-top: 85vh;
-left: 50%;
-transform: translateX(-50%);
-padding: 15px 25px;
-
+const Button = styled.button`
+flex-basis: 10%;
+padding: 0 25px;
 opacity: ${props => {
         if (props.isGameReady) return '1'
         return '.1'
@@ -22,14 +18,14 @@ border: none;
 cursor: pointer;
 `
 const startGameButton = props => {
-    const { startGame, isGameReady } = props
-
+    const { isGameReady, startGame } = props
     return (
         <Button
             disabled={isGameReady ? false : true}
             isGameReady={isGameReady}
-            onClick={startGame}>
-            Start Game!
+            onClick={startGame}
+        >
+            {props.children}
         </Button>
     )
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import StartGameButton from './StartGameButton/StartGameButton';
+import StartGameButton from '../UI/Buttons/StartGameButton/StartGameButton'
 import GameInfo from './GameInfo/GameInfo';
 
 
@@ -35,7 +35,10 @@ const startGameWindow = props => {
             <StartGameButton
                 isGameReady={isGameReady}
                 startGame={startGame}
-                time={time} />
+                time={time}>
+
+                Start Game
+                </StartGameButton>
         </StartGameWindowWrapper >
 
     )
