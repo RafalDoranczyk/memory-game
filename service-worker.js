@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/MemoryGame/precache-manifest.316fb081b1dbbd839b630f8a40bc75ba.js"
+  "/MemoryGame/precache-manifest.b7b39a79014bc20c5fba06920e5035e3.js"
 );
 
 workbox.clientsClaim();
