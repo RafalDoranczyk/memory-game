@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Button = styled.button`
 flex-basis: 10%;
-padding: 0 25px;
+padding: 0 6%;
 opacity: ${props => {
         if (props.isGameReady) return '1'
         return '.1'
