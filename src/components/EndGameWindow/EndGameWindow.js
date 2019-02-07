@@ -49,6 +49,18 @@ text-align: center;
 position: relative;
 top:0;
 left:0;
+@media(min-width: 600px){
+    width: 80%;
+}
+@media(min-width: 800px){
+    width: 70%;
+}
+@media(min-width: 1000px){
+    width: 60%;
+}
+@media(min-width: 1200px){
+    width: 50%;
+}
 `
 
 const API = 'https://colors-results.firebaseio.com/.json'
