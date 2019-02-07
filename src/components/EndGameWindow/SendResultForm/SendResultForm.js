@@ -12,18 +12,22 @@ transform: ${props => {
         return 'translateX(0)'
     }};
     transition: .3s;
+    font-size: 1.5rem;
 
+label{
+    color: ${({ theme }) => theme.colors.primary}
+}
 input{
     flex-basis: 15%;
     width: 70%;
     text-align: center;
 }
+
 button{
-    background-color: #FF8964;
-    border: none;
-    padding: 10px;
+    font-weight: 700;
+    background-color: ${({ theme }) => theme.colors.orange};;
+    padding: 1.3rem;
     border-radius: 50px;
-    font-weight: 900;
 }
 `
 

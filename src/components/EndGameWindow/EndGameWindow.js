@@ -9,46 +9,37 @@ import PlayerPosition from './PlayerPosition/PlayerPosition';
 import Spinner from '../UI/Spinner/Spinner';
 
 const EndGameWindowWrapper = styled.div`
-position: absolute;
-top: 0;
-left: 0;
+${({ theme }) => theme.mixins.absolutePosition(0, 0)}
 height: 100%;
 width: 100%; 
-padding: 10px;
-display:flex;
+padding: 1rem;
+display: flex;
 flex-flow: column nowrap;
 justify-content: space-around;
 align-items: center;
 transform:  ${({ isGameRunning, time }) => {
         if (!isGameRunning && time > 0) {
             return 'translateY(0)'
-        }
-        return 'translateY(-100%)'
+        } return 'translateY(-100%)'
     }};
 transition: transform .5s;
-font-size: 14px;
-background-color: #333;
-color: #ddd;
+background-color: ${({ theme }) => theme.colors.darkBackground};
+color: ${({ theme }) => theme.colors.primary};
 `
 
 const FormAndResultsBoardWrapper = styled.div`
-transform: ${props => {
-        if (props.isSended) return 'translateY(-20%)'
-        return
-    }};
-flex-basis: ${props => {
-        if (props.isSended) return '55%'
-        return '40%'
-    }};
+flex-basis: ${({ isSended }) => isSended ? '60%' : '40%'};
+transform: ${({ isSended }) => isSended ? 'translateY(-10%)' : '0'};
 width: 90%;
-transition: .5s .2s;
-background-color: #222;
-box-shadow: 0 0 25px 0 #F6820D;
-border-radius: 20px;
+transition: .5s .5s;
+background-color: ${({ theme }) => theme.colors.darkBackground};
+box-shadow: 0 0 25px 0 ${({ theme }) => theme.colors.orange};
+border-radius: 2rem;
 text-align: center;
 position: relative;
-top:0;
-left:0;
+top: 0;
+left: 0;
+
 @media(min-width: 600px){
     width: 80%;
 }
@@ -177,6 +168,7 @@ class EndGameWindow extends Component {
 
 
                 <PlayerPosition
+                    isSended={isSended}
                     playerPosition={playerPosition}
                 />
 

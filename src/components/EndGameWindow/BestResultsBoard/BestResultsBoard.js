@@ -3,23 +3,38 @@ import styled from 'styled-components'
 import OneResult from './OneResult/OneResult';
 
 const BestResultsBoardWrapper = styled.div`
+${({ theme }) => theme.mixins.relativePosition(0, 0)}
 height: 100%;
-display: flex;
-flex-flow: column nowrap;
-justify-content: space-around;
-text-align: center;
+
+h3{
+    ${({ theme }) => theme.mixins.absolutePosition(5, 0)}
+    width: 100%;
+    text-align: center;
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: 1.7rem;
+}
+
 `
 
 const Table = styled.table`
+${({ theme }) => theme.mixins.absolutePosition(15, 5)}
+font-size: 1.5rem;
 width: 90%;
 margin: 0 auto;
-background-color: #F6820D;
-color: #111;
+background-color: ${({ theme }) => theme.colors.orange};
+color: ${({ theme }) => theme.colors.orange};
+
+th{
+    color: ${({ theme }) => theme.colors.dark};
+    padding: .5rem;
+    background-color: ${({ theme }) => theme.colors.primary};
+}
+
 tr{
-    background-color: #FFCB2B;
+    background-color: ${({ theme }) => theme.colors.blue};
 }
 td{
-    color: #000;
+    color: ${({ theme }) => theme.colors.dark};
 }
 `
 
@@ -37,12 +52,9 @@ const BestResultsBoard = props => {
     ))
 
     return (
-        <BestResultsBoardWrapper
-
-        >
+        <BestResultsBoardWrapper>
             <h3>Top 10 best results</h3>
-            <Table
-            >
+            <Table>
                 <thead>
                     <tr>
                         <th>Name</th>

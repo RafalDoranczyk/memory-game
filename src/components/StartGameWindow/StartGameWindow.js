@@ -5,9 +5,7 @@ import GameInfo from './GameInfo/GameInfo';
 
 
 const StartGameWindowWrapper = styled.div`
-position: absolute;
-top: 0;
-left: 0;
+${({ theme }) => theme.mixins.absolutePosition(0, 0)}
 height: 100%;
 width: 100%;
 display: flex;
@@ -20,8 +18,7 @@ transform:${({ isStartGameWindowActive }) => {
         }
     }};
     transition:  transform .4s;
-background-color: #222;
-color: #FFA611;
+background-color: ${({ theme }) => theme.colors.darkBackground};
 `
 
 const startGameWindow = props => {

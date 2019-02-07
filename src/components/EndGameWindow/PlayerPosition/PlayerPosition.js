@@ -4,28 +4,38 @@ import styled from 'styled-components'
 
 const YourPositionWrapper = styled.div`
 width: 90%;
-flex-basis: 15%;
+flex-basis: 10%;
 display: flex;
 flex-flow: column nowrap;
 justify-content: space-between;
 align-items: center;
 text-align: center;
+margin-bottom: ${props => {
+        if (props.isSended) return '2rem'
+        return '0'
+    }};
+transition: margin-bottom .4s;
+
 span,h3{
     margin: auto; 
-   
+}
+h3{
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: 1.8rem;
 }
 span{
-    text-align: center;
-    transition: transform .4s;
     display: block;
-    color: #FFA611;
+    text-align: center;
+    font-size: 1.6rem;
+    transition: transform .4s;
+    color: ${({ theme }) => theme.colors.orange};
 }
 `
 
 
 const YourPosition = props => {
 
-    const { playerPosition, } = props
+    const { playerPosition, isSended } = props
     let message = "Send your result to find out!";
 
     if (playerPosition === 1) {
@@ -44,6 +54,7 @@ const YourPosition = props => {
     return (
 
         <YourPositionWrapper
+            isSended={isSended}
         >
 
             <h3>Your position: {playerPosition}</h3>

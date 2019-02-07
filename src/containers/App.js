@@ -69,7 +69,6 @@ class App extends Component {
       clickedBoards,
       renderedBoards,
       boardsDone,
-      isGameReady,
       isGameRunning } = this.state
 
 
