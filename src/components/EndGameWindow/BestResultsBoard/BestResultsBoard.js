@@ -3,39 +3,52 @@ import styled from 'styled-components'
 import OneResult from './OneResult/OneResult';
 
 const BestResultsBoardWrapper = styled.div`
-${({ theme }) => theme.mixins.relativePosition(0, 0)}
-height: 100%;
-
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
 h3{
-    ${({ theme }) => theme.mixins.absolutePosition(5, 0)}
-    width: 100%;
+    flex-basis: 15%;
     text-align: center;
     color: ${({ theme }) => theme.colors.primary};
     font-size: 1.7rem;
+    @media (orientation: landscape){
+        font-size: 1.2rem;
+        @media (min-width: 700px){
+            font-size: 2rem;
+        }
+    }
 }
 
 `
 
 const Table = styled.table`
-${({ theme }) => theme.mixins.absolutePosition(15, 5)}
-font-size: 1.5rem;
-width: 90%;
-margin: 0 auto;
-background-color: ${({ theme }) => theme.colors.orange};
-color: ${({ theme }) => theme.colors.orange};
+    font-size: 1.5rem;
+    width: 70%;
+    margin: 0 auto;
+    flex-basis: 80%;
+    background-color: ${({ theme }) => theme.colors.orange};
+    color: ${({ theme }) => theme.colors.orange};
 
-th{
-    color: ${({ theme }) => theme.colors.dark};
-    padding: .5rem;
-    background-color: ${({ theme }) => theme.colors.primary};
-}
+    @media(orientation:landscape){
+        font-size: 1rem;
+        @media(min-width: 700px){
+            font-size: 2rem;
+        }
+    }
+    th{
+        color: ${({ theme }) => theme.colors.dark};
+        padding: .5rem;
+        background-color: ${({ theme }) => theme.colors.primary};
+    }
 
-tr{
-    background-color: ${({ theme }) => theme.colors.blue};
-}
-td{
-    color: ${({ theme }) => theme.colors.dark};
-}
+    tr{
+
+        background-color: ${({ theme }) => theme.colors.blue};
+    }
+    td{
+        color: ${({ theme }) => theme.colors.dark};
+    }
 `
 
 
@@ -53,7 +66,7 @@ const BestResultsBoard = props => {
 
     return (
         <BestResultsBoardWrapper>
-            <h3>Top 10 best results</h3>
+            <h3>Top 8 best results</h3>
             <Table>
                 <thead>
                     <tr>

@@ -5,20 +5,17 @@ import GameInfo from './GameInfo/GameInfo';
 
 
 const StartGameWindowWrapper = styled.div`
-${({ theme }) => theme.mixins.absolutePosition(0, 0)}
-height: 100%;
-width: 100%;
-display: flex;
-flex-flow: column nowrap;
-justify-content: space-around;
-align-items: center;
-transform:${({ isStartGameWindowActive }) => {
-        if (!isStartGameWindowActive) {
-            return 'translateX(-100%)'
-        }
-    }};
+    ${({ theme }) => theme.mixins.absolutePosition(0, 0)}
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;;
+    align-items: center;
+    transform:${({ isStartGameWindowActive })=> !isStartGameWindowActive && 'translateX(-100%)' };
     transition:  transform .4s;
-background-color: ${({ theme }) => theme.colors.darkBackground};
+    background-color: ${({ theme }) => theme.colors.darkBackground};
+   
 `
 
 const startGameWindow = props => {

@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 
 const BoardWrapper = styled.div`
-height: 100vh;
-display: flex;
-flex-flow: row wrap;
+    height: 100vh;
+    display: flex;
+    flex-flow: row wrap;
 `
 
 

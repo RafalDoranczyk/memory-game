@@ -6,12 +6,12 @@ const Board = styled.div`
     flex-basis: 15%;
     flex-grow: 1;
     height: 33.33vh;
-    box-shadow: 0 0 1px 1px #D3D3D3;
-
-@media(orientation: portrait){
-        height: 16.66vh;
-        flex-basis: 33.30%;
-}
+    box-shadow: 0 0 1px 1px ${({theme})=>theme.colors.silver};
+    cursor: pointer;
+    @media(orientation: portrait){
+            height: 16.66vh;
+            flex-basis: 33.30%;
+    }
 `
 
 

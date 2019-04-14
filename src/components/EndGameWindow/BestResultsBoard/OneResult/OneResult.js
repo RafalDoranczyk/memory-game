@@ -1,7 +1,6 @@
 import React from 'react';
 
-const OneResult = props => {
-    const { time, name } = props
+const OneResult = ({time, name}) => {
     return (
         <tr>
             <td>{name}</td>

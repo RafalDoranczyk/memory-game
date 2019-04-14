@@ -2,50 +2,50 @@ import React from 'react';
 import styled from 'styled-components'
 
 const GameInfoWrapper = styled.div`
-width: 80%;
-flex-basis: 60%;
-display: flex;
-flex-flow: column nowrap;
-justify-content: space-around;
-align-items: center;
-text-align: justify;
-letter-spacing: 1px;
-font-size: 1.4rem;
-
-h1{
-    text-align: center;
-    color: ${({ theme }) => theme.colors.orange}
-}
-p{
-    margin-top: 5%;
-   color: ${({ theme }) => theme.colors.primary};
-   line-height: 140%;
-}
-@media(min-width: 490px){
-    width: 60%;
-    p{
-        line-height: 160%;
+    width: 80%;
+    flex-basis: 60%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    text-align: justify;
+    letter-spacing: 1px;
+    font-size: 1.4rem;
+    @media (min-width: 700px){
+        font-size: 1.8rem;
     }
-}
-@media (min-width: 800px){
-    width: 50%;
-    p{
-        line-height: 180%;
+   & h1{
+        text-align: center;
+        color: ${({ theme }) => theme.colors.orange}
     }
-}
-@media(min-width: 1200px){
-    width: 30%;
-    p{
-        line-height: 200%;
+   & p{
+        margin-top: 5%;
+        color: ${({ theme }) => theme.colors.primary};
+        line-height: 140%;
     }
-}
+    @media(min-width: 490px){
+        width: 60%;
+        p{
+            line-height: 160%;
+        }
+    }
+    @media (min-width: 800px){
+        width: 50%;
+        p{
+            line-height: 180%;
+        }
+    }
+    @media(min-width: 1200px){
+        width: 30%;
+        p{
+            line-height: 200%;
+        }
+    }
 `
 
 
 
-
-
-const GameInfo = props => {
+const GameInfo = () => {
     return (
         <GameInfoWrapper >
             <h1>Memory Game!</h1>

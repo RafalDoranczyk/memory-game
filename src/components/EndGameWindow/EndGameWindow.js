@@ -9,49 +9,47 @@ import PlayerPosition from './PlayerPosition/PlayerPosition';
 import Spinner from '../UI/Spinner/Spinner';
 
 const EndGameWindowWrapper = styled.div`
-${({ theme }) => theme.mixins.absolutePosition(0, 0)}
-height: 100%;
-width: 100%; 
-padding: 1rem;
-display: flex;
-flex-flow: column nowrap;
-justify-content: space-around;
-align-items: center;
-transform:  ${({ isGameRunning, time }) => {
-        if (!isGameRunning && time > 0) {
-            return 'translateY(0)'
-        } return 'translateY(-100%)'
-    }};
-transition: transform .5s;
-background-color: ${({ theme }) => theme.colors.darkBackground};
-color: ${({ theme }) => theme.colors.primary};
+    ${({ theme }) => theme.mixins.absolutePosition(0, 0)}
+    height: 100%;
+    width: 100%; 
+    padding: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+    transform:  ${({ isGameRunning, time }) => !isGameRunning && time>0 ? 'translateY(0)': 'translateY(-100%)'};
+    transition: transform .5s;
+    background-color: ${({ theme }) => theme.colors.darkBackground};
+    color: ${({ theme }) => theme.colors.primary};
 `
 
 const FormAndResultsBoardWrapper = styled.div`
-flex-basis: ${({ isSended }) => isSended ? '60%' : '40%'};
-transform: ${({ isSended }) => isSended ? 'translateY(-10%)' : '0'};
-width: 90%;
-transition: .5s .5s;
-background-color: ${({ theme }) => theme.colors.darkBackground};
-box-shadow: 0 0 25px 0 ${({ theme }) => theme.colors.orange};
-border-radius: 2rem;
-text-align: center;
-position: relative;
-top: 0;
-left: 0;
-
-@media(min-width: 600px){
-    width: 80%;
-}
-@media(min-width: 800px){
-    width: 70%;
-}
-@media(min-width: 1000px){
-    width: 60%;
-}
-@media(min-width: 1200px){
-    width: 50%;
-}
+    flex-basis: ${({ isSended }) => isSended ? '60%' : '45%'};
+    transform: ${({ isSended }) => isSended ? 'translateY(-10%)' : '0'};
+    width: 90%;
+    transition: .5s .5s;
+    background-color: ${({ theme }) => theme.colors.darkBackground};
+    box-shadow: 0 0 25px 0 ${({ theme }) => theme.colors.orange};
+    border-radius: 2rem;
+    text-align: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    @media (orientation: landscape){
+        width: 70%;
+    }
+    @media(min-width: 600px){
+        width: 80%;
+    }
+    @media(min-width: 800px){
+        width: 70%;
+    }
+    @media(min-width: 1000px){
+        width: 60%;
+    }
+    @media(min-width: 1200px){
+        width: 50%;
+    }
 `
 
 const API = 'https://colors-results.firebaseio.com/.json'
@@ -107,7 +105,7 @@ class EndGameWindow extends Component {
                                 return comparison;
                             }
                             data.sort(compare)
-                            data = data.splice(0, 10);
+                            data = data.splice(0, 8);
 
                             this.setState({ fetchedResults: data, playerPosition })
                         })
@@ -177,7 +175,6 @@ class EndGameWindow extends Component {
                     startGame={this.props.startGame}
                     fetchedResults={fetchedResults}>
                     Play Again!</StartGameButton>
-
 
             </EndGameWindowWrapper>
         );

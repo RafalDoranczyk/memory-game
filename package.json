@@ -2,7 +2,7 @@
   "name": "memory-game",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://RafalDoranczyk.github.io/MemoryGame/",
+  "homepage": "https://RafalDoranczyk.github.io/Memory-game/",
   "dependencies": {
     "axios": "^0.18.0",
     "gh-pages": "^2.0.1",

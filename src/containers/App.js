@@ -20,12 +20,11 @@ class App extends Component {
     time: 0,
     boardsDone: [],
     isStartGameWindowActive: true, //this window is showed only once
-
   }
 
   // Getting all colors from API. CHANGING STATE: ISGAMEREADY : TRUE!
   componentDidMount() {
-    let { allColors, } = this.state
+    let { allColors } = this.state
     axios.get(COLORS_API)
       .then(res => {
         allColors = res.data
@@ -35,7 +34,6 @@ class App extends Component {
   }
 
   createRenderedBoardsHandler = () => {
-
     // Same allColors array, but with random position of each color
     const temporaryArray = [...this.state.allColors]
     const allColors = [];
@@ -64,13 +62,11 @@ class App extends Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log(this.state.allColors)
     const {
       clickedBoards,
       renderedBoards,
       boardsDone,
       isGameRunning } = this.state
-
 
     if (boardsDone.length === 18 && prevState.isGameRunning === true) {
       clearInterval(this.timeID)
@@ -81,8 +77,6 @@ class App extends Component {
         }, 2000)
       }
     }
-
-
 
     if (isGameRunning) {
       if (this.state.clickedBoards.length === 2) {
@@ -106,10 +100,12 @@ class App extends Component {
 
   // STARTIN THE GAME, FUNCTION BELOW ARE TRIGGERED HERE
   startGameHandler = () => {
-    console.log('djest');
     this.showBoardsForASecondHandler();
     this.countTimeHandler();
-    this.setState({ isGameRunning: true, isStartGameWindowActive: false, isGameReady: false })
+    this.setState({ 
+      isGameRunning: true,
+       isStartGameWindowActive: false,
+        isGameReady: false })
   }
   // works ok
   showBoardsForASecondHandler = () => {
